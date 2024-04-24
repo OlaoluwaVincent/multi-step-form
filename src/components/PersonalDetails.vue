@@ -14,6 +14,7 @@
                         class="d-none"
                     ></v-file-input>
                 </v-col>
+
                 <v-col cols="12" class="text-center mx-auto">
                     <label for="file" class="custom-label">
                         <v-avatar
@@ -24,34 +25,57 @@
                         ></v-avatar>
                     </label>
                 </v-col>
+                <v-col cols="12">
+                    <v-alert
+                        v-if="imgErrorMessage"
+                        v-model="imgErrorMessage"
+                        text="Please fill in all fields and select an Image"
+                        title="Error"
+                        type="error"
+                        density="compact"
+                        closable
+                        class="mx-auto"
+                    ></v-alert>
+                </v-col>
             </v-row>
             <v-spacer tag="div" class="py-10" />
             <v-row>
                 <v-col cols="12" md="8" class="mx-auto">
                     <v-text-field
-                        v-model="firstname"
+                        v-model="fullname"
                         :rules="nameRules"
-                        label="First name"
+                        label="Full Name"
+                        required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="8" class="mx-auto d-flex gap-3">
+                    <SelectComponent
+                        :select="gender"
+                        label="Gender"
+                        @update:select="gendername = $event"
+                    />
+                    <div class="px-3" />
+                    <SelectComponent
+                        :select="marital_status"
+                        label="Marital Status"
+                        @update:select="status = $event"
+                    />
+                </v-col>
+
+                <v-col cols="12" md="8" class="mx-auto">
+                    <v-text-field
+                        v-model="nationality"
+                        :rules="nameRules"
+                        label="Nationality"
                         required
                     ></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="8" class="mx-auto">
                     <v-text-field
-                        v-model="lastname"
-                        :counter="10"
+                        v-model="languages"
                         :rules="nameRules"
-                        label="Last name"
-                        required
-                    ></v-text-field>
-                </v-col>
-
-                <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
-                        label="E-mail"
-                        hide-details
+                        label="Spoken Languages"
                         required
                     ></v-text-field>
                 </v-col>
@@ -70,13 +94,19 @@
 
 <script setup>
 import { ref, computed } from "vue";
+import { useAppStore } from "@/stores/app";
+import { gender, marital_status } from "@/assets/utils/select-values";
+const store = useAppStore();
 
 const valid = ref(false);
-const firstname = ref("");
-const lastname = ref("");
-const email = ref("");
+const fullname = ref("");
+const nationality = ref("");
+const languages = ref("");
 const selectedImage = ref(null);
 const previewUrl = ref(null);
+const imgErrorMessage = ref(false);
+const status = ref("");
+const gendername = ref("");
 
 function previewImage() {
     if (selectedImage.value) {
@@ -97,50 +127,31 @@ const nameRules = computed(() => [
         return "Name is required.";
     },
     (value) => {
-        if (value?.length <= 10) return true;
+        if (value?.length >= 5) return true;
 
         return "Name must be less than 10 characters.";
-    },
-]);
-const imageRule = computed(() => [
-    (value) => {
-        if (value) return true;
-
-        return "Profile Image is required.";
-    },
-    (value) => {
-        if (value[0].size >= 1000) return true;
-        console.log(value[0].size);
-        return "Please select quality image";
-    },
-]);
-
-const emailRules = computed(() => [
-    (value) => {
-        if (value) return true;
-
-        return "E-mail is required.";
-    },
-    (value) => {
-        if (/.+@.+\..+/.test(value)) return true;
-
-        return "E-mail must be valid.";
     },
 ]);
 
 function submit() {
     if (valid.value) {
+        if (!previewUrl.value || !gendername.value || !status.value) {
+            return (imgErrorMessage.value = true);
+        }
+        imgErrorMessage.value = false;
         const data = {
-            firstname: firstname.value,
-            lastname: lastname.value,
-            email: email.value,
+            fullname: fullname.value,
+            nationality: nationality.value,
+            languages: languages.value,
             imgUrl: previewUrl,
+            status: status.value,
+            gender: gendername.value,
         };
+        console.log(data);
 
         store.addDetails(data);
-        store.levels += 1;
+        store.updateLevels(2);
         return;
     }
-    console.log("not valid");
 }
 </script>
