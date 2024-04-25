@@ -1,12 +1,12 @@
 <template>
-  <div class="wrapper" v-if="dataToShow !== null">
+  <v-form v-model="formState" class="wrapper" v-if="dataToShow !== null">
     <v-combobox v-model="dataCert" :items="dataToShow.education" hint="Select Certifications or Stack" label="Select"
-      color="success" bg-color="" persistent-hint density="comfortable" item-title="name" item-value="name" multiple
-      chips></v-combobox>
+      color="success" bg-color="" persistent-hint density="comfortable" :rules="rules.select" item-title="name"
+      item-value="name" multiple chips></v-combobox>
     <v-combobox v-model="dataSkills" :items="dataToShow.skills" hint="Select Skills or Platforms" label="Select"
-      color="success" bg-color="" persistent-hint density="comfortable" item-title="name" item-value="name" multiple
-      chips></v-combobox>
-  </div>
+      color="success" bg-color="" persistent-hint density="comfortable" :rules="rules.select" item-title="name"
+      item-value="name" multiple chips></v-combobox>
+  </v-form>
 </template>
 
 <script setup>
@@ -22,14 +22,17 @@ const props = defineProps({
   profession: String,
 })
 const prof = computed(() => props.profession)
+const formState = ref(false)
 
 const dataToShow = ref(null)
-
+const rules = {
+  select: [(v) => v.length > 0 || "This field is required"],
+}
 
 const dataCert = ref([]);
 const dataSkills = ref([]);
 
-const emits = defineEmits(["skill:select", "cert:select"]);
+const emits = defineEmits(["skill:select", "cert:select", "formState"]);
 
 watch(prof, (newValue) => {
   dataCert.value = []
@@ -51,6 +54,11 @@ watch(prof, (newValue) => {
       dataToShow.value = null;
   }
 });
+
+watch(formState, (newValue) => {
+  emits("formState", newValue);
+});
+
 watch(dataCert, (newValue) => {
   emits("cert:select", newValue);
 });
