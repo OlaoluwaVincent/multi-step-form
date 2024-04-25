@@ -50,7 +50,7 @@ const nameRules = computed(() => [
     (value) => {
         if (value?.length >= 5) return true;
 
-        return "Name must be less than 10 characters.";
+        return "Name must be more than 5 characters.";
     },
 ]);
 
