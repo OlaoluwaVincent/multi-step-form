@@ -14,9 +14,12 @@
                     </label>
                 </v-col>
                 <v-col cols="12">
-                    <v-alert v-if="imgErrorMessage" v-model="imgErrorMessage"
-                        text="Please fill in all fields and select an Image" title="Error" type="error"
-                        density="compact" closable class="mx-auto"></v-alert>
+
+                    <v-expand-transition>
+                        <v-alert v-if="imgErrorMessage" v-model="imgErrorMessage" border="start" prominent
+                            text="Please fill in all fields and select an Image" title="Error" type="error"
+                            density="compact" closable class="mx-auto alertClass"></v-alert>
+                    </v-expand-transition>
                 </v-col>
             </v-row>
             <v-spacer tag="div" class="py-10" />
@@ -83,14 +86,28 @@ const nameRules = computed(() => [
     (value) => {
         if (value?.length >= 5) return true;
 
-        return "Name must be less than 10 characters.";
+        return "Name must be more than 5 characters";
     },
 ]);
+
+const timeOut = ref(null);
+
+function handleImgErrorMessage() {
+    if (imgErrorMessage.value === true) {
+        timeOut.value = setTimeout(() => {
+            imgErrorMessage.value = false;
+        }, 3000);
+    } else {
+        clearTimeout(timeOut.value);
+    }
+}
 
 function submit() {
     if (valid.value) {
         if (!previewUrl.value || !gendername.value || !status.value) {
-            return (imgErrorMessage.value = true);
+            imgErrorMessage.value = true
+            handleImgErrorMessage()
+            return
         }
         imgErrorMessage.value = false;
         const data = {
@@ -101,11 +118,25 @@ function submit() {
             status: status.value,
             gender: gendername.value,
         };
-        console.log(data);
 
         store.addDetails(data);
         store.updateLevels(2);
         return;
     }
 }
+
+
 </script>
+
+
+<style scoped>
+.alertClass {
+    width: 90%;
+}
+
+@media (width > 540px) {
+    .alertClass {
+        width: 60%;
+    }
+}
+</style>
