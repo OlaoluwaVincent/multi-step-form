@@ -3,89 +3,43 @@
         <v-container>
             <v-row>
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-file-input
-                        id="file"
-                        v-model="selectedImage"
-                        accept="image/*"
-                        @change="previewImage"
-                        outlined
-                        required
-                        prepend-icon="mdi-camera"
-                        class="d-none"
-                    ></v-file-input>
+                    <v-file-input id="file" v-model="selectedImage" accept="image/*" @change="previewImage" outlined
+                        required prepend-icon="mdi-camera" class="d-none"></v-file-input>
                 </v-col>
 
                 <v-col cols="12" class="text-center mx-auto">
                     <label for="file" class="custom-label">
-                        <v-avatar
-                            color="surface-variant"
-                            size="200"
-                            icon="mdi-camera"
-                            :image="previewUrl && previewUrl"
-                        ></v-avatar>
+                        <v-avatar color="surface-variant" size="200" icon="mdi-camera"
+                            :image="previewUrl && previewUrl"></v-avatar>
                     </label>
                 </v-col>
                 <v-col cols="12">
-                    <v-alert
-                        v-if="imgErrorMessage"
-                        v-model="imgErrorMessage"
-                        text="Please fill in all fields and select an Image"
-                        title="Error"
-                        type="error"
-                        density="compact"
-                        closable
-                        class="mx-auto"
-                    ></v-alert>
+                    <v-alert v-if="imgErrorMessage" v-model="imgErrorMessage"
+                        text="Please fill in all fields and select an Image" title="Error" type="error"
+                        density="compact" closable class="mx-auto"></v-alert>
                 </v-col>
             </v-row>
             <v-spacer tag="div" class="py-10" />
             <v-row>
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="fullname"
-                        :rules="nameRules"
-                        label="Full Name"
-                        required
-                    ></v-text-field>
+                    <v-text-field v-model="fullname" :rules="nameRules" label="Full Name" required></v-text-field>
                 </v-col>
                 <v-col cols="12" md="8" class="mx-auto d-flex gap-3">
-                    <SelectComponent
-                        :select="gender"
-                        label="Gender"
-                        @update:select="gendername = $event"
-                    />
+                    <SelectComponent :select="gender" label="Gender" @update:select="gendername = $event" />
                     <div class="px-3" />
-                    <SelectComponent
-                        :select="marital_status"
-                        label="Marital Status"
-                        @update:select="status = $event"
-                    />
+                    <SelectComponent :select="marital_status" label="Marital Status" @update:select="status = $event" />
                 </v-col>
 
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="nationality"
-                        :rules="nameRules"
-                        label="Nationality"
-                        required
-                    ></v-text-field>
+                    <v-text-field v-model="nationality" :rules="nameRules" label="Nationality" required></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="languages"
-                        :rules="nameRules"
-                        label="Spoken Languages"
-                        required
-                    ></v-text-field>
+                    <v-text-field v-model="languages" :rules="nameRules" label="Spoken Languages"
+                        required></v-text-field>
                 </v-col>
                 <v-col cols="12" md="8" class="mx-auto text-center">
-                    <v-btn
-                        type="submit"
-                        class="text-none text-white w-100"
-                        color="blue-darken-4"
-                        >Submit</v-btn
-                    >
+                    <v-btn type="submit" class="text-none text-white w-100" color="blue-darken-4">Proceed</v-btn>
                 </v-col>
             </v-row>
         </v-container>

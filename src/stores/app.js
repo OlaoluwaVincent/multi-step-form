@@ -33,7 +33,20 @@ export const useAppStore = defineStore(
             }
         }
 
-        return { levels, user, stepTitle, updateLevels, addDetails };
+        function resetStore() {
+            levels.value = 1;
+            user.value = null;
+            stepTitle.value = "Personal Details";
+        }
+
+        return {
+            levels,
+            user,
+            stepTitle,
+            updateLevels,
+            addDetails,
+            resetStore,
+        };
     },
     { persist: true }
 );

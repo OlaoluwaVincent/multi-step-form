@@ -1,16 +1,9 @@
 <template>
-    <v-select
-        v-model="selectedItem"
-        :items="select"
-        item-title="name"
-        item-value="value"
-        return-object
-        single-line
-    ></v-select>
+    <v-select v-model="selectedItem" :items="select" item-title="name" item-value="value" return-object
+        single-line></v-select>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
     select: {

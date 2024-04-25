@@ -4,51 +4,25 @@
             <v-spacer tag="div" class="py-10" />
             <v-row>
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
-                        label="Email"
-                        required
-                    ></v-text-field>
+                    <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="phone"
-                        :rules="nameRules"
-                        label="Phone Number"
-                        required
-                    ></v-text-field>
+                    <v-text-field v-model="phone" :rules="nameRules" label="Phone Number" required></v-text-field>
                 </v-col>
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="website"
-                        label="Website"
-                    ></v-text-field>
+                    <v-text-field v-model="website" label="Website"></v-text-field>
                 </v-col>
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="linkedIn"
-                        label="LinkedIn"
-                    ></v-text-field>
+                    <v-text-field v-model="linkedIn" label="LinkedIn"></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="8" class="mx-auto">
-                    <v-text-field
-                        v-model="address"
-                        :rules="nameRules"
-                        label="Residential Address"
-                        hide-details
-                        required
-                    ></v-text-field>
+                    <v-text-field v-model="address" :rules="nameRules" label="Residential Address" hide-details
+                        required></v-text-field>
                 </v-col>
                 <v-col cols="12" md="8" class="mx-auto text-center">
-                    <v-btn
-                        type="submit"
-                        class="text-none text-white w-100"
-                        color="blue-darken-4"
-                        >Submit</v-btn
-                    >
+                    <v-btn type="submit" class="text-none text-white w-100" color="blue-darken-4">Proceed</v-btn>
                 </v-col>
             </v-row>
         </v-container>
