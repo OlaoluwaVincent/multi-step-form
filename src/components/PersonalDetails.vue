@@ -17,8 +17,8 @@
 
                     <v-expand-transition>
                         <v-alert v-if="imgErrorMessage" v-model="imgErrorMessage" border="start" prominent
-                            text="Please fill in all fields and select an Image" title="Error" type="error"
-                            density="compact" closable class="mx-auto alertClass"></v-alert>
+                            text="Please select an Image" title="Error" type="error" density="compact" closable
+                            class="mx-auto alertClass"></v-alert>
                     </v-expand-transition>
                 </v-col>
             </v-row>
@@ -104,7 +104,7 @@ function handleImgErrorMessage() {
 
 function submit() {
     if (valid.value) {
-        if (!previewUrl.value || !gendername.value || !status.value) {
+        if (!previewUrl.value) {
             imgErrorMessage.value = true
             handleImgErrorMessage()
             return
